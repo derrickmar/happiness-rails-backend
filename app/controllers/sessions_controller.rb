@@ -4,7 +4,9 @@ class SessionsController < Devise::SessionsController
 
 	# POST /resource/sign_in
 	def create
-		puts current_user.id
+		if current_user
+			puts current_user.id
+		end
 		puts current_user == nil
 		puts 'IN CREATE SessionsController'
 		# Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
@@ -25,7 +27,9 @@ class SessionsController < Devise::SessionsController
 	def destroy
 		p 'In DESTROY'
 		puts params
-		puts current_user.id
+		if current_user
+			puts current_user.id
+		end
 		# binding.pry
 		signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
 		puts "is signed_out nil?"
