@@ -4,6 +4,8 @@ class SessionsController < Devise::SessionsController
 
 	# POST /resource/sign_in
 	def create
+		puts current_user
+		puts current_user == nil
 		puts 'IN CREATE SessionsController'
 		# Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
 		puts auth_options
