@@ -6,6 +6,7 @@ class SessionsController < Devise::SessionsController
 	def create
 		puts 'IN CREATE SessionsController'
 		# Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+		puts auth_options
 		self.resource = warden.authenticate!(auth_options)
 		set_flash_message(:notice, :signed_in) if is_flashing_format?
 		sign_in(resource_name, resource)
