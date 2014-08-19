@@ -17,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_up(resource_name, resource)
         respond_to do |format|
         format.html { respond_with resource, location: after_sign_up_path_for(resource) }
-          format.json { render :json => { user: resource, success: true } }
+        format.json { render :json => { user: resource, success: true } }
         end
       else
         puts "resource is inactive"
