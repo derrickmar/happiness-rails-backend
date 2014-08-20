@@ -18,6 +18,8 @@ class SessionsController < Devise::SessionsController
 		puts current_user.email
 		puts resource
 		puts params
+		puts '------------------------'
+		puts flash[:notice]
 		respond_to do |format|
 			format.html { respond_with resource, location: after_sign_in_path_for(resource) }
 			format.json { render :json => { user: resource, success: true } }
