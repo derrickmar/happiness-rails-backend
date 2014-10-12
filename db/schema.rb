@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819062530) do
+ActiveRecord::Schema.define(version: 20141011222138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "notifs", force: true do |t|
+    t.text     "desc"
+    t.boolean  "default",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifs_users", id: false, force: true do |t|
+    t.integer "notif_id"
+    t.integer "user_id"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -31,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140819062530) do
     t.datetime "updated_at"
     t.string   "authentication_token"
     t.string   "regid"
+    t.string   "time_zone"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
