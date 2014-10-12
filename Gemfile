@@ -34,6 +34,7 @@ gem 'pry-byebug'
 gem 'pry-stack_explorer'
 # for restAPI Cross-domain authentication
 gem 'simple_token_authentication'
+gem 'responders'
 gem 'rack-cors', :require => 'rack/cors'
 
 gem 'rails_12factor', group: :production

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
 	def notifs
 		@user = User.find(params[:id])
-		@notifs = @user.notifs
+		@notifs = @user.notifs.reverse
 		respond_with @notifs
 	end
 

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   devise_for :users, :controllers => {registrations: 'registrations', sessions: 'sessions'}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
       post 'add_reminder'
     end
   end
+
+  resources :notifs
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

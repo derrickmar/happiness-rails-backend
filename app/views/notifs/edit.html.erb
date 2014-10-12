@@ -1,0 +1,4 @@
+<%= form_for @notif, url: {action: "update"} do |f| %>
+  Description: <%= f.text_area :desc %>
+  <%= f.submit "Update" %>
+<% end %>
