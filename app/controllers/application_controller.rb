@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
   	devise_parameter_sanitizer.for(:sign_up) << :regid
+    devise_parameter_sanitizer.for(:sign_up) << :time_zone
   	# devise_parameter_sanitizer.for(:sign_in) << :regid
   end
 end

@@ -36,6 +36,7 @@ gem 'pry-stack_explorer'
 gem 'simple_token_authentication'
 gem 'responders'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'hirb'
 
 gem 'rails_12factor', group: :production
 

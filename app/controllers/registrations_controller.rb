@@ -5,6 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     puts "In RegistrationsController"
+    # binding.pry
     build_resource(sign_up_params)
 
     resource_saved = resource.save
@@ -12,12 +13,14 @@ class RegistrationsController < Devise::RegistrationsController
     if resource_saved
       if resource.active_for_authentication?
         puts "user successfully created"
-        puts params
+        puts resource
+        addDefaultNotifs(resource)
+        # puts params
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
         respond_to do |format|
-        format.html { respond_with resource, location: after_sign_up_path_for(resource) }
-        format.json { render :json => { user: resource, success: true } }
+          format.html { respond_with resource, location: after_sign_up_path_for(resource) }
+          format.json { render :json => { user: resource, success: true } }
         end
       else
         puts "resource is inactive"
@@ -36,6 +39,15 @@ class RegistrationsController < Devise::RegistrationsController
         format.html { respond_with resource }
         format.json { render :json => { resource: resource, success: false, errors: resource.errors.full_messages } }
       end
+    end
+  end
+
+  private
+
+  def addDefaultNotifs(user)
+    @notifs = Notif.where(default: true)
+    @notifs.each do |notif|
+      user.notifs << notif
     end
   end
 end

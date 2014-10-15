@@ -4,20 +4,21 @@ class SessionsController < Devise::SessionsController
 
 	# POST /resource/sign_in
 	def create
-		if current_user
-			puts current_user.id
-		end
-		puts current_user == nil
+		# if current_user
+		# 	puts current_user.id
+		# end
+		# puts current_user == nil
 		puts 'IN CREATE SessionsController'
 		# Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-		puts auth_options
+		# puts "AUTH_OPTIONS"
+		# puts auth_options
+		# binding.pry
 		self.resource = warden.authenticate!(auth_options)
 		set_flash_message(:notice, :signed_in) if is_flashing_format?
 		sign_in(resource_name, resource)
 		yield resource if block_given?
-		puts current_user.email
-		puts resource
-		puts params
+		# puts current_user.email
+		# puts resource
 		puts '------------------------'
 		puts flash[:notice]
 		respond_to do |format|

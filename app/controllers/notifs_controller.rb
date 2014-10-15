@@ -1,6 +1,6 @@
 class NotifsController < ApplicationController
 	respond_to :html, :json
-	skip_before_filter :verify_authenticity_token, :only => [:update, :create]
+	skip_before_filter :verify_authenticity_token, :only => [:update, :create, :destroy]
 
 	def edit
 		@notif = Notif.find(params[:id])
@@ -20,7 +20,18 @@ class NotifsController < ApplicationController
 		end
 	end
 
-	def delete
+	def destroy
+		@user = User.find(params[:user_id])
+		if @user.authentication_token == params[:user_token]
+			puts 'verify_authenticity_token successful'
+			@notif = Notif.find(params[:id])
+			@notif.destroy
+			respond_to do |format|
+			  format.json { render :json => { success: true } }
+			end
+		else
+			raise ActionController::InvalidAuthenticityToken
+		end
 	end
 
 	def update
@@ -34,11 +45,19 @@ class NotifsController < ApplicationController
 			# TODO: if the notif is a default and he updates it, then remove the user from
 			# that default notif
 			# then create a new non-default notif and add the user to do that
-
-			@notif.update_attributes(notif_params)
-			puts @notif.desc
-			respond_with(@notif) do |format|
-				format.json { render json: @notif }
+			if @notif.default
+				puts "REMOVING DEFAULT NOTIF FROM USER"
+				@new_notif = Notif.create(notif_params)
+				@user.notifs << @new_notif
+				@notif.users.delete(@user)
+				respond_with(@new_notif) do |format|
+					format.json { render json: @new_notif }
+				end
+			else
+				@notif.update_attributes(notif_params)
+				respond_with(@notif) do |format|
+					format.json { render json: @notif }
+				end
 			end
 		else
 			raise ActionController::InvalidAuthenticityToken
